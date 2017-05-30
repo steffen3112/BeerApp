@@ -10,19 +10,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogIn">
+        <activity android:name=".LoginRegistration.LogIn">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Register" />
+        <activity android:name=".LoginRegistration.Register" />
         <activity
             android:name=".UserArea"
             android:label="@string/title_activity_user_area"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".PINLogin"></activity>
+        <activity android:name=".LoginRegistration.PINLogin"></activity>
     </application>
 
 </manifest>

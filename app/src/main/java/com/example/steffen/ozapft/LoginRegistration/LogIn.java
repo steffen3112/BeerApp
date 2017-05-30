@@ -1,10 +1,12 @@
-package com.example.steffen.ozapft;
+package com.example.steffen.ozapft.LoginRegistration;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.steffen.ozapft.R;
 
 public class LogIn extends AppCompatActivity {
 
