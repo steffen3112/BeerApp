@@ -27,7 +27,6 @@ import org.json.JSONObject;
 public class PINLogin extends AppCompatActivity {
 
     static String PREF_EMAIL = "pref_email";
-    static String SAVED_EMAIL = "email gespeichert";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,8 +21,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+import com.example.steffen.ozapft.LoginRegistration.LogInRequest;
+import com.example.steffen.ozapft.LoginRegistration.PINLogin;
 import com.example.steffen.ozapft.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 public class UserArea extends AppCompatActivity
@@ -60,16 +68,15 @@ public class UserArea extends AppCompatActivity
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String nachname = intent.getStringExtra("surname");
-        String email = intent.getStringExtra("email");
+        final String email = intent.getStringExtra("email");
         nav_name.setText(name + " " + nachname);
         nav_email.setText(email);
 
         navigationView.setNavigationItemSelectedListener(this);
 
         //Hier wird die UserArea erstellt
-        final int beers = 1;
+         final int beers = 1;
 
-        ImageButton bBuy = (ImageButton) findViewById(R.id.btn_buy);
         ImageButton bMinus = (ImageButton) findViewById(R.id.btn_minus);
         ImageButton bPlus = (ImageButton) findViewById(R.id.btn_plus);
         final TextView edBeerCount = (TextView) findViewById(R.id.edt_count);
@@ -101,8 +108,48 @@ public class UserArea extends AppCompatActivity
             }
         });
 
+        ImageButton bBuy = (ImageButton) findViewById(R.id.btn_buy);
+
+        bBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Response received from the server
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+
+                            if (success) {
+                                String beercount = jsonResponse.getString("beers");
+                                TextView beercounter = (TextView) findViewById(R.id.beercounter);
+                                beercounter.setText(beercount);
+
+
+                            } else {
+
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                BeerCountRequest beercountrequest = new BeerCountRequest(email, Integer.parseInt(edBeerCount.getText().toString()), responseListener);
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                queue.add(beercountrequest);
+            }
+        });
+
+
+
 
     }
+
 
     @Override
     public void onBackPressed() {
