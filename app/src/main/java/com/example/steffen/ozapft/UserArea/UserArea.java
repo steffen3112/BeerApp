@@ -1,4 +1,4 @@
-package com.example.steffen.ozapft;
+package com.example.steffen.ozapft.UserArea;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.steffen.ozapft.R;
 
 public class UserArea extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +46,10 @@ public class UserArea extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        TextView nav_name = (TextView) hView.findViewById(R.id.nav_name);
+        TextView nav_email = (TextView) hView.findViewById(R.id.nav_email);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         final EditText eName = (EditText) findViewById(R.id.edt_name_userarea);
@@ -54,6 +58,8 @@ public class UserArea extends AppCompatActivity
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
+        String nachname = intent.getStringExtra("surname");
+        String email = intent.getStringExtra("email");
         int age = intent.getIntExtra("age", -1);
 
         String message = name + " welcome to your user area";
@@ -61,7 +67,8 @@ public class UserArea extends AppCompatActivity
         eName.setText(name);
         eAge.setText(age + "");
 
-
+        nav_name.setText(name + " " + nachname);
+        nav_email.setText(email);
 
     }
 

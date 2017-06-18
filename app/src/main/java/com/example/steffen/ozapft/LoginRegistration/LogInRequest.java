@@ -19,7 +19,9 @@ public class LogInRequest extends StringRequest{
     /*Die URL muss die lokale IPv4 Adresse enthalten, sowie das aufzurufende Skript.
       Dies befindet sich im www-Ordner von Wamp
     */
-    private static final String LOGIN_REQUEST_URL = "http://192.168.187.155/Login.php";
+    //private static final String LOGIN_REQUEST_URL = "http://192.168.187.155/Login.php";
+    private static final String LOGIN_REQUEST_URL = "https://ozapftis.000webhostapp.com/Login.php";
+
     private Map<String, String> params;
 
     public LogInRequest(String email, String password, Response.Listener<String> listener){

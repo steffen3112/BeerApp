@@ -48,26 +48,16 @@ public class Register extends AppCompatActivity {
 
         final Button bRegister = (Button) findViewById(R.id.btn_register);
 
+
         bRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final String vorname = edName.getText().toString();
                 final String nachname = edSurname.getText().toString();
                 final String email = edEmail.getText().toString();
                 final int age =  pckrAge.getValue();
                 final String password = edPassword.getText().toString();
-
-                if(vorname == "" || nachname == "" || email == "" || password=="" )
-                {
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
-                    builder.setMessage("Register Failed")
-                            .setNegativeButton("Retry", null)
-                            .create()
-                            .show();
-                }
-
-                else {
 
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
 
@@ -101,10 +91,22 @@ public class Register extends AppCompatActivity {
                         }
                     };
 
+                if(vorname == "" || nachname == "" || email == "" || password=="" )
+                {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Register.this);
+                    builder.setMessage("Register Failed")
+                            .setNegativeButton("Retry", null)
+                            .create()
+                            .show();
+                }
+                else {
+
                     RegisterRequest registerRequest = new RegisterRequest(vorname, nachname, email, age, password, responseListener);
                     RequestQueue queue = Volley.newRequestQueue(Register.this);
                     queue.add(registerRequest);
                 }
+
             }
         });
     }

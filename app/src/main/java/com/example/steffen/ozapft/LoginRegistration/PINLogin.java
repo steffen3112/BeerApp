@@ -1,6 +1,7 @@
 package com.example.steffen.ozapft.LoginRegistration;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.steffen.ozapft.R;
-import com.example.steffen.ozapft.UserArea;
+import com.example.steffen.ozapft.UserArea.UserArea;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,19 +26,26 @@ import org.json.JSONObject;
  */
 public class PINLogin extends AppCompatActivity {
 
+    static String PREF_EMAIL = "pref_email";
+    static String SAVED_EMAIL = "email gespeichert";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pinlogin);
 
-        final EditText edPIN = (EditText) findViewById(R.id.edt_pin);
+        final SharedPreferences sharedPreferences = getPreferences(this.MODE_PRIVATE);
         final EditText edEmail = (EditText) findViewById(R.id.edt_email_login);
-
+        final EditText edPIN = (EditText) findViewById(R.id.edt_pin);
         final Button bLogin = (Button) findViewById(R.id.btn_login_to_mainmenu);
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(PREF_EMAIL, edEmail.getText().toString());
+                editor.commit();
+
                 final String email = edEmail.getText().toString();
                 final String password = edPIN.getText().toString();
 
@@ -51,10 +59,14 @@ public class PINLogin extends AppCompatActivity {
 
                             if (success) {
                                 String name = jsonResponse.getString("name");
+                                String nachname = jsonResponse.getString("surname");
+                                String email = jsonResponse.getString("email");
                                int age = jsonResponse.getInt("age");
 
                                 Intent intent = new Intent(PINLogin.this, UserArea.class);
                                 intent.putExtra("name", name);
+                                intent.putExtra("surname", nachname);
+                                intent.putExtra("email", email);
                                 intent.putExtra("age", age);
 
                                 PINLogin.this.startActivity(intent);
@@ -77,6 +89,11 @@ public class PINLogin extends AppCompatActivity {
                 queue.add(loginRequest);
                     }
                 });
+
+                 String savedEmail = sharedPreferences.getString(PREF_EMAIL, "");
+                 if(savedEmail != ""){
+                     edEmail.setText(savedEmail);
+                     }
 
             }
         }
