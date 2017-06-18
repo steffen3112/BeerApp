@@ -61,13 +61,13 @@ public class PINLogin extends AppCompatActivity {
                                 String name = jsonResponse.getString("name");
                                 String nachname = jsonResponse.getString("surname");
                                 String email = jsonResponse.getString("email");
-                               int age = jsonResponse.getInt("age");
+
 
                                 Intent intent = new Intent(PINLogin.this, UserArea.class);
                                 intent.putExtra("name", name);
                                 intent.putExtra("surname", nachname);
                                 intent.putExtra("email", email);
-                                intent.putExtra("age", age);
+
 
                                 PINLogin.this.startActivity(intent);
                             } else {

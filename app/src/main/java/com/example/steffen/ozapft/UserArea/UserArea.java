@@ -2,6 +2,7 @@ package com.example.steffen.ozapft.UserArea;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -16,9 +17,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.steffen.ozapft.R;
+
+import org.w3c.dom.Text;
 
 public class UserArea extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,29 +50,57 @@ public class UserArea extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        //Navigation Header, Textfelder (Layout: nav_header_user_area)
         View hView = navigationView.getHeaderView(0);
         TextView nav_name = (TextView) hView.findViewById(R.id.nav_name);
         TextView nav_email = (TextView) hView.findViewById(R.id.nav_email);
 
-        navigationView.setNavigationItemSelectedListener(this);
-
-        final EditText eName = (EditText) findViewById(R.id.edt_name_userarea);
-        final EditText eAge = (EditText) findViewById(R.id.edt_age_userarea);
-        final TextView welcomeMessage = (TextView) findViewById(R.id.txt_welcome);
-
+        //Hier werden die User-Daten in den Navigation Header geschrieben
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String nachname = intent.getStringExtra("surname");
         String email = intent.getStringExtra("email");
-        int age = intent.getIntExtra("age", -1);
-
-        String message = name + " welcome to your user area";
-        welcomeMessage.setText(message);
-        eName.setText(name);
-        eAge.setText(age + "");
-
         nav_name.setText(name + " " + nachname);
         nav_email.setText(email);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //Hier wird die UserArea erstellt
+        final int beers = 1;
+
+        ImageButton bBuy = (ImageButton) findViewById(R.id.btn_buy);
+        ImageButton bMinus = (ImageButton) findViewById(R.id.btn_minus);
+        ImageButton bPlus = (ImageButton) findViewById(R.id.btn_plus);
+        final TextView edBeerCount = (TextView) findViewById(R.id.edt_count);
+
+        edBeerCount.setText(Integer.toString(beers));
+
+        bMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int beers = Integer.parseInt(edBeerCount.getText().toString());
+                if(beers > 1 ) {
+                    beers  -=  1;
+                    edBeerCount.setText(Integer.toString(beers));
+                }
+
+
+            }
+        });
+
+        bPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int beers = Integer.parseInt(edBeerCount.getText().toString());
+                if(beers < 10) {
+                    beers += 1;
+                    edBeerCount.setText(Integer.toString(beers));
+                }
+
+            }
+        });
+
 
     }
 
