@@ -1,4 +1,4 @@
-package com.example.steffen.ozapft.UserArea;
+package com.example.steffen.ozapft.LoginRegistration.UserArea;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -13,7 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.steffen.ozapft.R;
-import com.example.steffen.ozapft.UserArea.UserArea;
+import com.example.steffen.ozapft.LoginRegistration.UserArea.UserArea;
 
 import org.json.JSONException;
 import org.json.JSONObject;

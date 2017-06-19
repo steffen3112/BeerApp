@@ -1,13 +1,11 @@
-package com.example.steffen.ozapft.UserArea;
+package com.example.steffen.ozapft.LoginRegistration.UserArea;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,20 +15,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-import com.example.steffen.ozapft.LoginRegistration.LogInRequest;
-import com.example.steffen.ozapft.LoginRegistration.PINLogin;
 import com.example.steffen.ozapft.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class UserArea extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -114,6 +108,9 @@ public class UserArea extends AppCompatActivity
             @Override
             public void onClick(View v) {
 
+                int beers = Integer.parseInt(edBeerCount.getText().toString());
+
+
                 // Response received from the server
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -123,9 +120,9 @@ public class UserArea extends AppCompatActivity
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
-                                String beercount = jsonResponse.getString("beers");
+                                int beercount = jsonResponse.getInt("beers");
                                 TextView beercounter = (TextView) findViewById(R.id.beercounter);
-                                beercounter.setText(beercount);
+                                beercounter.setText(Integer.toString(beercount));
 
 
                             } else {
@@ -139,7 +136,7 @@ public class UserArea extends AppCompatActivity
                     }
                 };
 
-                BeerCountRequest beercountrequest = new BeerCountRequest(email, Integer.parseInt(edBeerCount.getText().toString()), responseListener);
+                BeerCountRequest beercountrequest = new BeerCountRequest(email, beers, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                 queue.add(beercountrequest);
             }
