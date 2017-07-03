@@ -15,6 +15,7 @@ public class BeerCountRequest extends StringRequest {
 
 
     private static final String BEERCOUNT_REQUEST_URL = "https://ozapftis.000webhostapp.com/Beercount.php";
+    private static final String BEERRANKING_REQUEST_URL = "https://ozapftis.000webhostapp.com/BeerRanking.php";
 
     private Map<String, String> params;
 
@@ -23,6 +24,12 @@ public class BeerCountRequest extends StringRequest {
         params = new HashMap<>();
         params.put("email", email);
         params.put("beers", beers + "");
+    }
+
+    public BeerCountRequest(Response.Listener<String> listener){
+        super(Request.Method.POST, BEERRANKING_REQUEST_URL, listener, null);
+
+
     }
 
     @Override

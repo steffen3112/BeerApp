@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.steffen.ozapft.LoginRegistration.UserArea.MyConsumption;
 import com.example.steffen.ozapft.R;
 import com.example.steffen.ozapft.LoginRegistration.UserArea.UserArea;
 
@@ -66,6 +67,7 @@ public class PINLogin extends AppCompatActivity {
                                 intent.putExtra("name", name);
                                 intent.putExtra("surname", nachname);
                                 intent.putExtra("email", email);
+
 
 
                                 PINLogin.this.startActivity(intent);

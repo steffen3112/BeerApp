@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +29,8 @@ import org.json.JSONObject;
 
 public class UserArea extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +63,8 @@ public class UserArea extends AppCompatActivity
 
         //Hier werden die User-Daten in den Navigation Header geschrieben
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        String nachname = intent.getStringExtra("surname");
+        final String name = intent.getStringExtra("name");
+        final String nachname = intent.getStringExtra("surname");
         final String email = intent.getStringExtra("email");
         nav_name.setText(name + " " + nachname);
         nav_email.setText(email);
@@ -70,6 +73,7 @@ public class UserArea extends AppCompatActivity
 
         //Hier wird die UserArea erstellt
          final int beers = 1;
+
 
         ImageButton bMinus = (ImageButton) findViewById(R.id.btn_minus);
         ImageButton bPlus = (ImageButton) findViewById(R.id.btn_plus);
@@ -102,6 +106,8 @@ public class UserArea extends AppCompatActivity
             }
         });
 
+
+        //Wird auf das "Bier" geclickt, wird ein Request an den Server gesendet
         ImageButton bBuy = (ImageButton) findViewById(R.id.btn_buy);
 
         bBuy.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +124,8 @@ public class UserArea extends AppCompatActivity
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
+                            Log.d("SUCCESS", Boolean.toString(success));
+
 
                             if (success) {
                                 int beercount = jsonResponse.getInt("beers");
@@ -194,14 +202,29 @@ public class UserArea extends AppCompatActivity
             fragmentTransaction.add(R.id.fragment_container, radarFragment);
             fragmentTransaction.commit();
         } else if (id == R.id.nav_ranking) {
+            Intent i = new Intent(getApplicationContext(), BeerRanking.class);
+            startActivity(i);
+
 
         } else if (id == R.id.nav_news) {
 
         } else if (id == R.id.nav_consumption) {
 
+            Intent i = new Intent(getApplicationContext(), MyConsumption.class);
+            Intent intent = getIntent();
+            String email = intent.getStringExtra("email");
+            i.putExtra("email", email);
+            startActivity(i);
+
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
 
         }
 
